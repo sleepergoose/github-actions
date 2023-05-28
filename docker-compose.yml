@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  webapi:
+    container_name: webapi
+    restart: on-failure
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    environment:  
+      - ASPNETCORE_ENVIRONMENT=Production
+    networks:
+      - back
+    ports:  
+      - "5000:80"
+
+  webclient:
+    container_name: webclient
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    networks:
+      - back
+      - front
+    ports:
+      - "4201:80"
+    depends_on:
+      - webapi
+
+networks:
+  back:
+    driver: bridge
+  front:
+    driver: bridge
