@@ -8,11 +8,11 @@ jobs:                         # start of the job
     runs-on: ubuntu-latest
     steps:
       - name: Build Frontend
-        - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Install pnpm
-        - uses: pnpm/action-setup@v2
-            with:
-              version: 6.0.2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - name: Install dependencies
         run: pnpm ci
       - name: Build app
