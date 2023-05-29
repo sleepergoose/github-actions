@@ -1,19 +1,29 @@
 name: ContinuesIntegration
 
 on:
-  workflow_dispatch:          # trigger
+  workflow_dispatch:            # trigger
 
-jobs:                         # start of the job
-  build-backend:              # name of the job
+jobs:                           # start of the job
+  analize_frontend:              # name of the job
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build Frontend
-        uses: pnpm/action-setup@v2
+      - uses: ./.github/actions/setup-pnpm
         with:
-          version: 7
-      - name: Install dependencies
-        run: pnpm ci
-      - name: Build app
+          path: ./frontend
+      - name: Eslint check
+        working-directory: ./frontend
+        run: pnpm lint
+  
+  build_frontend:              
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-pnpm
+        with:
+          path: ./frontend
+      - name: Build Angular App
+        working-directory: ./frontend
         run: pnpm build
+
       
