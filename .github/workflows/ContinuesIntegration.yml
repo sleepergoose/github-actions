@@ -1,10 +1,13 @@
 name: ContinuesIntegration
 
 on:
-  workflow_dispatch:            # trigger
+  pull_request:
+    branches: [ develop ]
 
-jobs:                           # start of the job
-  analize_frontend:              # name of the job
+  workflow_dispatch:
+
+jobs:
+  analize_frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,4 +29,18 @@ jobs:                           # start of the job
         working-directory: ./frontend
         run: pnpm build
 
-      
+  build_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build backend
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Restore dependencies
+        working-directory: ./backend/WebApi
+        run: dotnet restore
+      - name: Build
+        working-directory: ./backend/WebApi
+        run: dotnet build --no-restore
+
