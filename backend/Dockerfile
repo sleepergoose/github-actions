@@ -4,7 +4,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-COPY ["WebApi/WebApi.csproj", "WebApi/"]
+COPY ["WebApi/", "WebApi/"]
 RUN dotnet restore "WebApi/WebApi.csproj"
 COPY . .
 WORKDIR "/src/WebApi"
