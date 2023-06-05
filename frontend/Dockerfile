@@ -2,6 +2,7 @@ FROM node:18 AS builder
 WORKDIR /app
 RUN npm i -g pnpm
 COPY . .
+RUN cd app
 RUN pnpm install
 RUN pnpm build
 
