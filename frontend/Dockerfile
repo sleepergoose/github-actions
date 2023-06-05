@@ -6,7 +6,7 @@ RUN pnpm install
 RUN pnpm build --output-path=/tmp/dist
 
 FROM nginx:1.22-alpine
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY /usr/src/app/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=0 /tmp/dist/* /usr/share/nginx/html
