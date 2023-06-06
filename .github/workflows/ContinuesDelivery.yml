@@ -43,6 +43,7 @@ jobs:
           tags: sleepergoose/backend:latest
           context: ./backend
           file: ./backend/Dockerfile
+          build-args: PROJECT_PORT=5050
           push: true
 
   build-frontend:
