@@ -21,7 +21,7 @@ jobs:
           token: ${{ github.token }}
           filters: .github/file-filters.yml
 
-  build-backend:
+  build_backend:
     needs: check-files
     if: ${{ needs.check-files.outputs.backend == 'true' || needs.check-files.outputs.configs == 'true' }}
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
           build-args: PROJECT_PORT=5050
           push: true
 
-  build-frontend:
+  build_frontend:
     needs: check-files
     if: ${{ needs.check-files.outputs.frontend == 'true' || needs.check-files.outputs.configs == 'true' }}
     runs-on: ubuntu-latest
@@ -74,3 +74,16 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: sleepergoose/frontend:latest
+
+ deploy_images:
+    runs-on: ubuntu-latest
+    if: |
+      success() &&
+      (needs.build_backend.result == 'success' || 
+      needs.build_frontend.result == 'success')
+    needs:
+        - build_backend
+        - build_frontend
+    steps:
+      - name: Print to console
+        run: echo Completed
