@@ -75,7 +75,7 @@ jobs:
           push: true
           tags: sleepergoose/frontend:latest
 
- deploy_images:
+  deploy_images:
     runs-on: ubuntu-latest
     if: |
       success() &&
