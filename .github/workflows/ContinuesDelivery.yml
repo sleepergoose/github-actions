@@ -78,9 +78,8 @@ jobs:
   deploy_images:
     runs-on: ubuntu-latest
     if: |
-      success() &&
-      (needs.build_backend.result == 'success' || 
-      needs.build_frontend.result == 'success')
+      needs.build_backend.result == 'success' || 
+      needs.build_frontend.result == 'success'
     needs:
         - build_backend
         - build_frontend
